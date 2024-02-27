@@ -1,3 +1,11 @@
+/** @brief  This file is a simple utility for reading 
+ *          and outputting information about a specific
+ *          WAV file.
+ * 
+ * @author  Trevor Mee
+ * @date    2/27/2024
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -6,6 +14,8 @@ using namespace std;
 using std::string;
 using std::fstream;
 
+
+// Structure of a wav header
 typedef struct  WAV_HEADER{
     char                RIFF[4];        // RIFF Header      Magic header
     unsigned long       ChunkSize;      // RIFF Chunk Size  
@@ -27,47 +37,38 @@ typedef struct  WAV_HEADER{
 int getFileSize(FILE *inFile); 
 int getNumberOfBeaps(FILE *inFile);
 
+// Main method
 int main(int argc,char *argv[]){
+    
     wav_hdr wavHeader;
     FILE *wavFile;
     int headerSize = sizeof(wav_hdr),filelength = 0;
 
+    string input;
     string answer;
 
     do{
-        string input;
-        string answer;
 
-        const char* filePath;
-
-        cout << "Pick wav file from the Windows Media File: ";
+        cout << "Enter the name of the wav file you want: ";
         cin >> input;
-        cin.get();
+        cin.ignore();
 
-        cout << endl;
+        // Get the filePath
+        const char* filePath = input.c_str();
 
-    /*
-        path = "C:\\Windows\\Media\\" + input + ".wav";
-        path = "smooth-ac-guitar-loop-93bpm-137706.mp3";
-
-        filePath = path.c_str();
-    
-        wavFile = fopen( filePath , "r" );
-    */
-     
-     // wavFile = fopen("smooth-ac-guitar-loop-93bpm-137706.mp3", "r");
-      wavFile = fopen("drumloop.wav", "r");
-
+        // Open the wav file
+        wavFile = fopen(filePath, "rb");
 
         if(wavFile == NULL){
             printf("Can not able to open wave file\n");
-            //exit(EXIT_FAILURE);
         }
 
+        // Reading the wav file
         fread(&wavHeader,headerSize,1,wavFile);
         filelength = getFileSize(wavFile);
         fclose(wavFile);
 
+        // Output wav file information
         cout << "File is                    :" << filelength << " bytes." << endl;
 
         cout << "RIFF header                :" << wavHeader.RIFF[0] 
@@ -107,17 +108,18 @@ int main(int argc,char *argv[]){
                                                 << wavHeader.Subchunk2ID[3] 
                                                 << endl;
 
+        // Promt user to check out another wav file
         cout << endl << endl << "Try something else? (y/n)";
         cin >> answer;
-        //cin.get();
         cout << endl << endl;
 
     }while( answer == "y" );
 
-
     getchar();
     return 0;
 } 
+
+
 // find the file size 
 int getFileSize(FILE *inFile){
     int fileSize = 0;
@@ -128,6 +130,7 @@ int getFileSize(FILE *inFile){
     fseek(inFile,0,SEEK_SET);
     return fileSize;
 }
+
 
 int getNumberOfBeaps(FILE *inFile){
     return 1;
