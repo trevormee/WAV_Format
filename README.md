@@ -13,6 +13,4 @@ g++ wavmain.cpp -o wavmain
 ```
 
 ## Sample Output of the provided drumloop.wav file in the program folder...
-![Screenshot 1](https://github.com/trevormee/WAV_Format/assets/122403539/055a2e36-37e4-4719-945f-f3789b5a5f5a)
-
-<img src="https://github.com/trevormee/WAV_Format/assets/122403539/055a2e36-37e4-4719-945f-f3789b5a5f5a" width="200">
+<img src="https://github.com/trevormee/WAV_Format/assets/122403539/055a2e36-37e4-4719-945f-f3789b5a5f5a" width="500">
